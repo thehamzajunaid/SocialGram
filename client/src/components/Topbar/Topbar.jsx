@@ -1,11 +1,20 @@
 import './topbar.css'
 import { Search,Person , Chat, Notifications} from '@mui/icons-material'
+import {Link} from 'react-router-dom'
 
 function Topbar() {
+
+  const delay = ms => new Promise(res => setTimeout(res, ms));
   return (
     <div className='topbarContainer'>
         <div className="topbarLeft">
-          <div className="logo">SocialGram</div>
+          <Link to="/" style={{textDecoration: "none"}}  onClick={async () => {
+            await delay(1000)
+            window.location.reload()
+          }}>
+            <div className="logo">SocialGram</div>
+          </Link>
+          
         </div>
         <div className="topbarCenter">
           <div className="searchbar">
