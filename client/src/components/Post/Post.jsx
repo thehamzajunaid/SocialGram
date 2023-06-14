@@ -1,28 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './post.css'
-import { Users } from '../../dummyData'
+import axios from 'axios';
+import {format} from 'timeago.js'
+import {Link} from 'react-router-dom'
+// import { Users } from '../../dummyData'
 
 
 function Post({post}) {
    
-    const [like, setLike] = useState(post.like)
+    const [like, setLike] = useState(post.likes.length)
     const [isLiked, setiIsLiked] = useState(false)
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    const [user, setUser] = useState([])
 
     const likeHandler=()=> {
         setLike(isLiked ? like-1 : like+1)
         setiIsLiked(!isLiked)
     }
 
+    useEffect(() => {
+        const fetchUser = async () => {
+          const res = await axios.get(`users/${post.userId}`)
+          setUser(res.data)
+        }
+        // console.log("hello")
+        fetchUser()
+        
+      }, [post.userId])
+
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+
   return (
     <div className='post'>
         <div className="postWrapper">
             <div className="postTop">
                  <div className="postTopLeft">
-                    <img src={Users.filter(user=>user.id === post.userId)[0].profilePicture} alt="" className="postProfileImg" />
-                    <span className="postUsername">{Users.filter(user=>user.id === post.userId)[0].username}</span>
-                    <span className="postDate">{post.date}</span>
+                    <Link to={`profile/${user.username}`} style={{textDecoration: "none"}}>
+                    <img src={user.profilePicture || PF+"person/noPicture.jpg"} alt="" className="postProfileImg" />
+                    </Link>
+                    <span className="postUsername">{user.username}</span>
+                    <span className="postDate">{format(post.createdAt)}</span>
                  </div>
                  <div className="postTopRight">
                     <MoreVertIcon/>
@@ -30,7 +48,7 @@ function Post({post}) {
             </div>
             <div className="postCentre">
                 <span className="postText">{post?.desc}</span>
-                <img src={PF+post.photo} alt="" className="postImg" />
+                <img src={PF+post.img} alt="" className="postImg" />
 
             </div>
             <div className="postBottom">
