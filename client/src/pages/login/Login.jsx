@@ -1,6 +1,16 @@
+import { useRef } from 'react'
 import './login.css'
 
 function Login() {
+
+    const email = useRef();
+    const password = useRef();
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        console.log(email.current.value)
+    }
+
   return (
     <>
     <div className="login">
@@ -11,15 +21,15 @@ function Login() {
                 SocialGram helps you connect and share with the people in your life.
                 </span>
             </div>
-            <div className="loginRight">
+            <form className="loginRight" onSubmit={handleClick}>
                 <div className="loginBox">
-                    <input placeholder='Email' className="loginInput" />
-                    <input placeholder='Password' className="loginInput" />
+                    <input placeholder='Email' required type="email" className="loginInput" ref={email}/>
+                    <input placeholder='Password' required type="password" minLength="6" className="loginInput" ref={password} />
                     <button className="loginButton">Login</button>
                     <span className="loginForgot">Forgot Password</span>
                     <button className="loginRegisterButton">Create New Account</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     </>

@@ -21,7 +21,7 @@ function Post({post}) {
 
     useEffect(() => {
         const fetchUser = async () => {
-          const res = await axios.get(`users/${post.userId}`)
+          const res = await axios.get(`/users?userId=${post.userId}`)
           setUser(res.data)
         }
         // console.log("hello")
@@ -36,7 +36,7 @@ function Post({post}) {
         <div className="postWrapper">
             <div className="postTop">
                  <div className="postTopLeft">
-                    <Link to={`profile/${user.username}`} style={{textDecoration: "none"}}>
+                    <Link to={`/profile/${user.username}`} style={{textDecoration: "none"}}>
                     <img src={user.profilePicture || PF+"person/noPicture.jpg"} alt="" className="postProfileImg" />
                     </Link>
                     <span className="postUsername">{user.username}</span>
