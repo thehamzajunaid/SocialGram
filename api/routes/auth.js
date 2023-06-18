@@ -42,14 +42,23 @@ router.post("/register", async (req,res)=> {
 router.post("/login", async (req, res) => {
     try{
         const user = await User.findOne({email: req.body.email});
-        !user && res.status(404).json({"Error":"user not found"});
+        // !user && res.status(404).json({"Error":"user not found"});
 
-        const validpassword = await bcrypt.compare(req.body.password, user.password);
-        !validpassword && res.status(404).json({"Error":"user found but wrong password"});
+        // const validpassword = await bcrypt.compare(req.body.password, user.password);
+        // !validpassword && res.status(404).json({"Error":"user found but wrong password"});
+      if (!user) {
+          return res.status(404).json({ error: "User not found" });
+      }
+
+      const validPassword = await bcrypt.compare(req.body.password, user.password);
+      if (!validPassword) {
+          return res.status(404).json({ error: "Incorrect password" });
+      }
 
         res.status(200).json(user)
     } catch(err){
         res.status(500).json(err)
+        // console.log(err)
     }
 })
 
