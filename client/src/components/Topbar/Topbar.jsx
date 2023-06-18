@@ -1,20 +1,25 @@
 import './topbar.css'
 import { Search,Person , Chat, Notifications} from '@mui/icons-material'
+import { useContext } from 'react';
 import {Link} from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext';
 
 function Topbar() {
+
+  const {user} = useContext(AuthContext)
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   return (
     <div className='topbarContainer'>
         <div className="topbarLeft">
-          <Link to="/" style={{textDecoration: "none"}}  onClick={async () => {
-            await delay(1000)
-            window.location.reload()
-          }}>
+          <Link to="/" style={{textDecoration: "none"}}  >
             <div className="logo">SocialGram</div>
           </Link>
-          
+          {/* onClick={async () => {
+            await delay(1000)
+            window.location.reload()
+          }} */}
         </div>
         <div className="topbarCenter">
           <div className="searchbar">
@@ -41,7 +46,10 @@ function Topbar() {
               <span className="topbarIconBadge">1</span>
             </div>
           </div>
-          <img src="/assets/person/1.jpg" alt="person" className="topbarImage" />
+          <Link to={`/profile/${user.username}`}>
+            <img src={user.profilePicture ? PF + user.profilePicture : PF+"person/noPicture.jpg"} alt="person" className="topbarImage" />
+          </Link>
+          
         </div>
     </div>
   )

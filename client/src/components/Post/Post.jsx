@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './post.css'
 import axios from 'axios';
 import {format} from 'timeago.js'
 import {Link} from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext';
 // import { Users } from '../../dummyData'
 
 
@@ -13,8 +14,20 @@ function Post({post}) {
     const [isLiked, setiIsLiked] = useState(false)
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [user, setUser] = useState([])
+    const {user:currentUser} = useContext(AuthContext)
+
+    //to handle the problem of "post is disliked" response when user already liked a post in past
+    // and try to like it again
+    useEffect(()=> {
+        setiIsLiked(post.likes.includes(currentUser._id))
+    }, [currentUser._id, post.likes])
 
     const likeHandler=()=> {
+        try{
+            axios.put("/posts/"+post._id+"/like/",{userId: currentUser._id})
+        }catch(err){
+
+        }
         setLike(isLiked ? like-1 : like+1)
         setiIsLiked(!isLiked)
     }
@@ -37,7 +50,7 @@ function Post({post}) {
             <div className="postTop">
                  <div className="postTopLeft">
                     <Link to={`/profile/${user.username}`} style={{textDecoration: "none"}}>
-                    <img src={user.profilePicture || PF+"person/noPicture.jpg"} alt="" className="postProfileImg" />
+                    <img src={user.profilePicture ? PF+user.profilePicture : PF+"person/noPicture.jpg"} alt="" className="postProfileImg" />
                     </Link>
                     <span className="postUsername">{user.username}</span>
                     <span className="postDate">{format(post.createdAt)}</span>

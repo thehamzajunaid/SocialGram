@@ -22,7 +22,7 @@ function Profile() {
     // console.log("hello")
     fetchUser()
     
-  }, [])
+  }, [username])
 
   return(
     <>
@@ -32,8 +32,8 @@ function Profile() {
         <div className="profileRight">
             <div className="profileRightTop">
                 <div className="profileCover">
-                    <img src={user.coverPicture || PF+"person/noCover.png" } className="profileCoverImage"/>
-                    <img src={user.profilePicture || PF+"person/noPicture.jpg"} className="profileUserImage"/>
+                    <img src={user.coverPicture ? PF+user.coverPicture:  PF+"person/noCover.png" } className="profileCoverImage"/>
+                    <img src={user.profilePicture ? PF+user.coverPicture: PF+"person/noPicture.jpg"} className="profileUserImage"/>
                     
                 </div>
                 <div className="profileInfo">
