@@ -1,5 +1,11 @@
+@import "../../style.scss";
+
 .profileContainer{
+    @include themify($themes){
     display: flex;
+    background-color: themed("bg");
+    color: themed("textColor")
+    }
 }
 
 .profileRight{

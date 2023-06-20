@@ -1,7 +1,13 @@
+@import "../../style.scss";
+
 .rightbar{
+    @include themify($themes){
     flex:3.5;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 30px);
     overflow: scroll;
+    background-color: themed("bg");
+    color: themed("textColor")
+    }
 }
 
 /* for scroller */

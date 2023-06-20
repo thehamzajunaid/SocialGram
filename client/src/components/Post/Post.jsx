@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import './post.css'
 import axios from 'axios';
 import {format} from 'timeago.js'
 import {Link} from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext';
+import BasicModal from './DeleteModal/DeleteModal'; 
 // import { Users } from '../../dummyData'
 
 
@@ -42,8 +44,32 @@ function Post({post}) {
         
       }, [post.userId])
 
-      const delay = ms => new Promise(res => setTimeout(res, ms));
+      const handleDeletePost = async () => {
+        if (post.userId === currentUser._id){
+            try{
+                await axios.delete("/posts/"+post._id, { data: { userId: currentUser._id }})
+            } catch(err){
+                console.log(err)
+            }
+            window.location.reload()
+        }else{
+            console.log("cannot delete others post")
+        }
+      }
 
+      //Modal functions
+      const [open, setOpen] = useState(false);
+      const handleOpen = () => {
+        if (post.userId === currentUser._id){
+            setOpen(true)
+        }else{
+            alert("cannot delete others post")
+        }
+      };
+      
+      const handleClose = () => setOpen(false);
+
+      
   return (
     <div className='post'>
         <div className="postWrapper">
@@ -55,9 +81,13 @@ function Post({post}) {
                     <span className="postUsername">{user.username}</span>
                     <span className="postDate">{format(post.createdAt)}</span>
                  </div>
-                 <div className="postTopRight">
-                    <MoreVertIcon/>
+                 <div className="postTopRight" onClick={handleOpen}>
+                    <DeleteOutlineOutlinedIcon/>
+                    {open && <BasicModal post={post} currentUser={currentUser} open={open} handleOpen={handleOpen} handleClose={handleClose}/>}
                  </div>
+                 {/* <div className="postTopRight" onClick={handleDeletePost}>
+                    <DeleteOutlineOutlinedIcon/>
+                 </div> */}
             </div>
             <div className="postCentre">
                 <span className="postText">{post?.desc}</span>

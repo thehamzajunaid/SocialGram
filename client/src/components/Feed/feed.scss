@@ -1,0 +1,13 @@
+@import "../../style.scss";
+
+.feed{
+    flex: 5.5;
+}
+
+.feedWrapper{
+    @include themify($themes){
+    padding: 10px;
+    background-color: themed("bg");
+    color: themed("textColor")
+    }
+}

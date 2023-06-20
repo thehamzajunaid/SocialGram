@@ -1,4 +1,4 @@
-import './rightbar.css'
+import './rightbar.scss'
 import {Users} from "../../dummyData"
 import OnlineFriends from '../OnlineFriends/OnlineFriends'
 import { useContext, useEffect, useState } from 'react'

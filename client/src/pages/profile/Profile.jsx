@@ -1,4 +1,4 @@
-import './profile.css'
+import './profile.scss'
 import Sidebar from "../../components/Sidebar/Sidebar"
 import Topbar from "../../components/Topbar/Topbar"
 import Feed from "../../components/Feed/Feed"

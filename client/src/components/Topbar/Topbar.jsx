@@ -1,25 +1,26 @@
-import './topbar.css'
+import './topbar.scss'
 import { Search,Person , Chat, Notifications} from '@mui/icons-material'
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { useContext } from 'react';
 import {Link} from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext';
 
 function Topbar() {
 
-  const {user} = useContext(AuthContext)
+  const {user, toggle, darkMode} = useContext(AuthContext)
   const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   return (
     <div className='topbarContainer'>
         <div className="topbarLeft">
+          <span className="topbarLeftLogo">
           <Link to="/" style={{textDecoration: "none"}}  >
             <div className="logo">SocialGram</div>
           </Link>
-          {/* onClick={async () => {
-            await delay(1000)
-            window.location.reload()
-          }} */}
+          </span>
+          <span className='topbarLeftDarkMode' onClick={toggle}>{darkMode ? <LightModeOutlinedIcon sx={{color: 'white'}}/> : <DarkModeOutlinedIcon /> }</span>
         </div>
         <div className="topbarCenter">
           <div className="searchbar">

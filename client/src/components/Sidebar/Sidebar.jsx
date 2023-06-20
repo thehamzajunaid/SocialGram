@@ -1,4 +1,4 @@
-import './sidebar.css'
+import './sidebar.scss'
 import {Users} from "../../dummyData"
 
 import RssFeedIcon from '@mui/icons-material/RssFeed';

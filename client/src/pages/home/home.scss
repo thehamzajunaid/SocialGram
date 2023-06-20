@@ -1,0 +1,9 @@
+@import "../../style.scss";
+
+.homeContainer{
+    @include themify($themes){
+    display:flex;
+    width: 100%;
+    background-color: themed("bg");
+    }
+}

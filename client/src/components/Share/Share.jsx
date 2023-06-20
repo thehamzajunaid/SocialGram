@@ -1,4 +1,4 @@
-import './share.css'
+import './share.scss'
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import CancelIcon from '@mui/icons-material/Cancel';

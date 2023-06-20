@@ -1,9 +1,15 @@
+@import "../../style.scss";
+
 .sidebar{
+    @include themify($themes){
     flex: 3;
     height: calc(100vh - 50px);
     overflow: scroll;
     position: sticky;
     top: 50px;
+    background-color: themed("bg");
+    color: themed("textColor")
+    }
 }
 
 
@@ -41,11 +47,15 @@
 }
 
 .sidebarButton{
+    @include themify($themes){
     width: 150px;
     border: none;
     padding: 10px;
     border-radius: 5px;
     font-weight: 500;
+    background-color: themed("bgSoft");
+    color: themed("textColor")
+    }
 }
 
 .sidebarHr{

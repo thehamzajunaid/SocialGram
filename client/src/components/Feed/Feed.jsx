@@ -1,6 +1,6 @@
 import Share from '../Share/Share'
 import Post from '../Post/Post'
-import './feed.css'
+import './feed.scss'
 import { useContext, useEffect, useState } from 'react'
 // import { Posts } from '../../dummyData'
 import axios from "axios"
