@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import './deleteModal.css'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { PostDeleteModalContext } from '../../../context/PostDeleteModal/PostDeleteModalContext';
 
 const style = {
   position: 'absolute',
@@ -12,15 +13,19 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: 'grey.400',
+  border: '2px solid grey.400',
   boxShadow: 24,
   p: 4,
+  borderRadius: '5px'
 };
 
-export default function BasicModal({post, currentUser, open, handleOpen, handleClose}) {
+export default function BasicModal({post, currentUser, open, handleOpen, setOpen}) {
 
-  
+  // const {open, handleClose} = useContext(PostDeleteModalContext)
+  console.log(post.userId, "->>> 1")
+  console.log(currentUser._id, "-->>>2")
+
     const handleDeletePost = async () => {
         if (post.userId === currentUser._id){
             try{
@@ -36,6 +41,12 @@ export default function BasicModal({post, currentUser, open, handleOpen, handleC
         }
       }
 
+      const handleClose = () => {
+        setOpen(false)
+      }
+
+     
+
   return (
     <div className='deleteModal'>
       
@@ -47,7 +58,7 @@ export default function BasicModal({post, currentUser, open, handleOpen, handleC
       >
         <Box sx={style}>
             <div className="deleteModalRight">
-                <button className="deleteModalRightClose">Close</button>
+                <button className="deleteModalRightClose" onClick={handleClose}>Close</button>
             </div>
             <div className="deleteDialogueContainer">
                 <div className="deleteDialogueMessage">
@@ -57,7 +68,7 @@ export default function BasicModal({post, currentUser, open, handleOpen, handleC
                 </div>
             
                 <div className="deleteDialogueButton">
-                    <Button onClick={handleDeletePost}>Delete</Button>
+                    <Button onClick={handleDeletePost} color="error"> Delete</Button>
                 </div>
             </div>
         </Box>

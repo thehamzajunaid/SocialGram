@@ -119,5 +119,15 @@
     height:32px;
     border-radius: 50%;
     object-fit: cover; /* wraps the image */
+}
+
+.topbarRightLogoutProfile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topbarRightLogoutProfileItem{
+    margin-right: 15px;
     cursor: pointer;
 }

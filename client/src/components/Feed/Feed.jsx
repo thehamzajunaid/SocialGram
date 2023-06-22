@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 // import { Posts } from '../../dummyData'
 import axios from "axios"
 import { AuthContext } from '../../context/AuthContext'
+import { PostDeleteModalContextProvider } from '../../context/PostDeleteModal/PostDeleteModalContext';
 
 function Feed({username}) {
   const [posts, setPosts] = useState([])
@@ -26,6 +27,7 @@ function Feed({username}) {
   
 
   return (
+    <PostDeleteModalContextProvider>
     <div className='feed'>
       <div className="feedWrapper">
         {username ? username === user.username && <Share/> : <Share/>}
@@ -35,6 +37,7 @@ function Feed({username}) {
         
       </div>
     </div>
+    </PostDeleteModalContextProvider>
   )
 }
 

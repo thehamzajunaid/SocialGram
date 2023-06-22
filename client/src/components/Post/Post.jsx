@@ -67,10 +67,13 @@ function Post({post}) {
         }
       };
       
-      const handleClose = () => setOpen(false);
+      const handleClose = () => {
+        setOpen(false);
+      }
 
       
   return (
+    
     <div className='post'>
         <div className="postWrapper">
             <div className="postTop">
@@ -81,13 +84,18 @@ function Post({post}) {
                     <span className="postUsername">{user.username}</span>
                     <span className="postDate">{format(post.createdAt)}</span>
                  </div>
-                 <div className="postTopRight" onClick={handleOpen}>
+                 <div className="postTopRight">
+                    <div className="deleteButton" onClick={handleOpen}>
                     <DeleteOutlineOutlinedIcon/>
-                    {open && <BasicModal post={post} currentUser={currentUser} open={open} handleOpen={handleOpen} handleClose={handleClose}/>}
+                    </div>
+                    
+                    <div className='deleteModal'>
+                    {open && 
+                    <BasicModal post={post} currentUser={currentUser} open={open} setOpen={setOpen} handleOpen={handleOpen} handleClose={handleClose}/>                    
+                    }
+                    </div>
+                    
                  </div>
-                 {/* <div className="postTopRight" onClick={handleDeletePost}>
-                    <DeleteOutlineOutlinedIcon/>
-                 </div> */}
             </div>
             <div className="postCentre">
                 <span className="postText">{post?.desc}</span>
@@ -107,6 +115,7 @@ function Post({post}) {
         </div>
         
     </div>
+    
   )
 }
 

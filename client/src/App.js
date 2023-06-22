@@ -9,40 +9,25 @@ import {
   Navigate
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
+import Messenger from "./pages/messenger/Messenger";
 
 
 function App() {
 
   const {user, darkMode} = useContext(AuthContext)
 
-  console.log(darkMode)
+  // console.log(darkMode)
   return (
     <div className={`theme-${darkMode ? "dark" : "light"}`}>
       <Routes>
-      <Route path="/" element={ user ? <Home/> : <Register/>}/>
+      <Route path="/" element={ user ? <Home/> : <Login/>}/>
       <Route path="/login" element={user ? <Navigate to="/"/> :<Login/>}/>
       <Route path="/register" element={user ? <Navigate to="/"/> :<Register/>}/>
+      <Route path="/messenger" element={!user ? <Navigate to="/"/> :<Messenger/>}/>
       <Route path="/profile/:username" element={<Profile/>}/>
     </Routes>
     </div>
     
-    
-    // <Router>
-    //   <Switch>
-    //     <Route exact path="/">
-    //       <Home/>
-    //     </Route>
-    //     <Route path="/login">
-    //       <Login/>
-    //     </Route>
-    //     <Route path="/register">
-    //       <Home/>
-    //     </Route>
-    //     <Route path="/profile/:username">
-    //       <Profile/>
-    //     </Route>
-    //   </Switch>
-    // </Router>
   );
 }
 
