@@ -9,6 +9,8 @@ const path = require("path")
 const usersRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
+const conversationRoute = require("./routes/conversation");
+const messagesRoute = require("./routes/messages");
 
 
 dotenv.config();
@@ -54,6 +56,8 @@ app.post("/api/upload", upload.single("image"), (req,res)=> {
 app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messagesRoute);
 
 //We wont be using them because we will be making REST APIs
 // app.get("/", (req,res)=> {
