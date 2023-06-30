@@ -1,0 +1,14 @@
+.feed {
+  flex: 5.5;
+}
+
+.theme-light .feedWrapper {
+  padding: 10px;
+  background-color: white;
+  color: #000;
+}
+.theme-dark .feedWrapper {
+  padding: 10px;
+  background-color: #222;
+  color: whitesmoke;
+}/*# sourceMappingURL=feed.css.map */

@@ -6,6 +6,8 @@ import ChatOnline from '../../components/ChatOnline/ChatOnline'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
+import {io} from "socket.io-client"
+import { useRef } from 'react'
 
 
 
@@ -14,7 +16,36 @@ function Messenger() {
     const [currentChat, setCurrentChat] = useState(null)
     const [messages, setMessages ] = useState([])
     const [newMessage, setNewMessage] = useState("")
+    const [arrivalMessage, setArrivalMessage] = useState(null)
+    const [onlineUsers, setOnlineUsers] = useState([])
+    const socket = useRef()
     const {user} = useContext(AuthContext)
+    const scrollRef = useRef()
+
+    useEffect(()=> {
+        socket.current = io("ws://localhost:8900")
+        socket.current?.on("getMessage", (data) => {
+            setArrivalMessage({
+                senderId: data.senderId,
+                text: data.text,
+                createdAt: Date.now()
+            })
+        })
+    }, [])
+
+    useEffect(()=> {
+        arrivalMessage && 
+            currentChat?.members.includes(arrivalMessage?.senderId) &&
+            setMessages((prev)=> [...prev, arrivalMessage])
+    },[arrivalMessage, currentChat])
+
+    useEffect(()=> {
+        socket.current?.emit("addUser", user._id)
+        socket.current?.on("getUsers", connectedUsers=> {
+            // console.log(connectedUsers)
+            setOnlineUsers(user.followings.filter((friend)=> connectedUsers.some((cu)=> cu.userId === friend)))
+        })
+    },[user])
 
     useEffect(() => {
         const getConversations = async () => {
@@ -45,6 +76,11 @@ function Messenger() {
     
     // console.log(messages)
 
+    //the chatbox should scroll down when new message is sent
+    useEffect(()=> {
+        scrollRef.current?.scrollIntoView({behavior: "smooth"})
+    },[messages])
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         const message = {
@@ -52,6 +88,15 @@ function Messenger() {
             text: newMessage,
             conversationId: currentChat._id
         }
+
+        //send the data to socket so we can share it to the receiver in real time
+        const receiverId = currentChat.members.find(member=> member !== user._id)
+
+        socket.current.emit("sendMessage", {
+            senderId: user._id,
+            receiverId,
+            text: newMessage
+        })
 
         try {
             const res = await axios.post("/messages", message)
@@ -83,7 +128,10 @@ function Messenger() {
                 <>
                 <div className="chatBoxTop">
                     {messages.map((m) => (
-                        <Message message={m} own={m.sender === user._id}/>
+                        <div ref={scrollRef}>
+                            <Message message={m} own={m.sender === user._id}/>
+                        </div>
+                        
                     ))}
                     
                 </div>
@@ -98,7 +146,7 @@ function Messenger() {
         </div>
         <div className="chatOnline">
             <div className="chatOnlineWrapper">
-                <ChatOnline/>
+                <ChatOnline onlineUsers={onlineUsers} currentUserId={user._id} setCurrentChat={setCurrentChat}/>
             </div>
         </div>
     </div>

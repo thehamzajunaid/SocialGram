@@ -1,0 +1,81 @@
+.theme-light .sidebar {
+  flex: 3;
+  height: calc(100vh - 50px);
+  overflow: scroll;
+  position: sticky;
+  top: 50px;
+  background-color: white;
+  color: #000;
+}
+.theme-dark .sidebar {
+  flex: 3;
+  height: calc(100vh - 50px);
+  overflow: scroll;
+  position: sticky;
+  top: 50px;
+  background-color: #222;
+  color: whitesmoke;
+}
+
+/* for scroller */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(190, 184, 184);
+}
+
+.sidebarWrapper {
+  padding: 20px;
+}
+
+.sidebarList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.sidebarListItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebarItemIcon {
+  margin-right: 15px;
+}
+
+.theme-light .sidebarButton {
+  width: 150px;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+  background-color: #f6f3f3;
+  color: #000;
+}
+.theme-dark .sidebarButton {
+  width: 150px;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+  background-color: #333;
+  color: whitesmoke;
+}
+
+.sidebarHr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sidebarFriendList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}/*# sourceMappingURL=sidebar.css.map */
